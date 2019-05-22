@@ -292,6 +292,13 @@
   dependencies:
     "@types/cordova" latest
 
+"@ionic-native/facebook@^5.6.0":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/facebook/-/facebook-5.6.0.tgz#a1f5198a3da2be5d36dd69fccacb5054e1af7c09"
+  integrity sha512-q2Xm94H7p686xWHMlqx20Fcfr67PZ+b8kjaSkEMN4r8KtdbAG9owC9UC2oq452+W+aJbMd/jSXwHnf8wSAXwaA==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic-native/splash-screen@^5.0.0":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-5.5.1.tgz#173cc0e8b3109fd8d9861b1226abee165d5ff2e8"
