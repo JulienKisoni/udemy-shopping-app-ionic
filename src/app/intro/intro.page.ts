@@ -1,6 +1,9 @@
+import { environement } from './../../models/environements';
+import { HttpClient } from '@angular/common/http';
+import { Utilisateur } from './../../models/utilisateur-interface';
 import { Component, OnInit } from '@angular/core';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import { Router } from '@angular/router';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-intro',
@@ -8,8 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./intro.page.scss'],
 })
 export class IntroPage implements OnInit {
-
-  constructor( private fb: Facebook, private router: Router) { }
+utilisateur = {} as Utilisateur;
+  constructor( private fb: Facebook, private storage : NativeStorage, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -20,8 +23,37 @@ export class IntroPage implements OnInit {
       .catch(e => console.log('Error logging into Facebook', e));
       }
   
-  go() : void {
-    this.router.navigateByUrl('/home');
+  loginWithPhone() {
+    (<any>window).AccountKitPlugin.loginWithPhoneNumber(
+      {
+        useAccessToken: true,
+        defaultCountryCode: "US",
+        facebookNotificationsEnabled: true
+      }, (success) => {
+          console.log('success', success);
+          (<any>window).AccountKitPlugin.getAccount(
+            async account => {
+              console.log('account', account);
+              this.utilisateur = {
+                contact : account.phoneNumber,
+                type: 'phone',
+                avatar: "",
+                username: ""
+              }
+              await this.storage.setItem('Utilisateur', this.utilisateur);
+              await this.storage.setItem('isLoggedIn', true);
+              // stocker utilisateur dans MongoDB
+                let url : string = `${environement.api_url}/Utilisateurs`;
+                this.http.post(url, this.utilisateur)
+                  .subscribe(user => {
+                    // naviguer vers la page d'acceuil
+                  })
+            }, (fail => {
+              console.log('fail', fail)
+            }))
+      }, (error => {
+          console.log('error', error);
+      }))
   }
 
 }

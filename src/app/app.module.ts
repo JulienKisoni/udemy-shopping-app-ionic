@@ -1,4 +1,6 @@
 import { Facebook } from '@ionic-native/facebook/ngx';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Facebook
+    Facebook,
+    NativeStorage
   ],
   bootstrap: [AppComponent]
 })
