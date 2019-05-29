@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { environement } from './../../models/environements';
 import { HttpClient } from '@angular/common/http';
 import { Utilisateur } from './../../models/utilisateur-interface';
@@ -12,18 +13,41 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 })
 export class IntroPage implements OnInit {
 utilisateur = {} as Utilisateur;
-  constructor( private fb: Facebook, private storage : NativeStorage, private http: HttpClient) { }
+  constructor( private fb: Facebook, private storage : NativeStorage, private http: HttpClient,
+      private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
   loginWithFacebook() : void {
     this.fb.login(['public_profile', 'user_friends', 'email'])
-      .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+      .then((res: FacebookLoginResponse) => {
+        console.log('Logged into Facebook!', res);
+        this.fb.api('me?fields=email', [])
+          .then(async profil => {
+            let email: string = profil['email'];
+            this.utilisateur = {
+              contact : email,
+              type: 'email',
+              avatar: "",
+              username: ""
+            }
+            await this.storage.setItem('Utilisateur', this.utilisateur);
+            await this.storage.setItem('isLoggedIn', true);
+            // stocker utilisateur dans MongoDB
+              let url : string = `${environement.api_url}/Utilisateurs`;
+              this.http.post(url, this.utilisateur)
+                .subscribe(user => {
+                  // naviguer vers la page d'acceuil
+                  this.navCtrl.navigateRoot('/home');
+                })
+          })
+      })
       .catch(e => console.log('Error logging into Facebook', e));
       }
   
   loginWithPhone() {
+    console.log('btn clicked');
     (<any>window).AccountKitPlugin.loginWithPhoneNumber(
       {
         useAccessToken: true,
@@ -47,6 +71,8 @@ utilisateur = {} as Utilisateur;
                 this.http.post(url, this.utilisateur)
                   .subscribe(user => {
                     // naviguer vers la page d'acceuil
+                    console.log('user', user);
+                    this.navCtrl.navigateRoot('/home');
                   })
             }, (fail => {
               console.log('fail', fail)
