@@ -35,7 +35,7 @@ export class AppComponent {
     });
   }
   showCategory(catTitle: string) : void {
-    this.navCtrl.navigateForward('/category');
+    this.navCtrl.navigateForward('/category/'+catTitle);
     console.log('catTitle', catTitle);
   }
 

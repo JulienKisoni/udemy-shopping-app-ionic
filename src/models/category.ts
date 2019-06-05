@@ -10,7 +10,7 @@ export const categories = [
       icon : "phone-portrait"
     },
     {
-      title : "Mode & Accessoires",
+      title : "Mode",
       description : "description",
       icon : "bowtie"
     },
