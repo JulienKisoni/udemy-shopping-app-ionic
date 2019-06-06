@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>cart</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mon Panier</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <ion-item *ngFor="let item of cartItems; let i = index">
+      <ion-thumbnail>
+        <ion-img [src]="'http://192.168.8.101:3000/api/Containers/photos/download/'+item.item.pictures[0]"></ion-img>
+      </ion-thumbnail>
+      <div class="my-container-label">
+        <ion-label>{{ item.title }}</ion-label>
+        <ion-badge color="secondary">{{ item.qty }}</ion-badge><span> x {{ item.amount | currency }}</span>
+        <ion-label *ngIf="item.item.availability.type==='Livraison'">
+          Livraison : {{ item.item.availability.feed | currency }}
+        </ion-label>
+        <ion-label>Total : {{ ((item.qty*item.item.price)+item.item.availability.feed | currency)}}</ion-label>
+        <ion-button size="small">
+          <ion-icon slot="start" name="mail"></ion-icon>
+          Contacter le vendeur
+        </ion-button>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>
