@@ -13,3 +13,13 @@
 .btn-cart {
     text-transform: none !important;
 }
+.title {
+    text-align: center;
+    font-weight: 500;
+    font-size: 15px !important;
+}
+.rating-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

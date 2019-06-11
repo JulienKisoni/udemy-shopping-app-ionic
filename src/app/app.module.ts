@@ -1,6 +1,9 @@
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -26,7 +29,10 @@ import { AppRoutingModule } from './app-routing.module';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Facebook,
     NativeStorage,
-    PhotoViewer
+    PhotoViewer,
+    ImagePicker,
+    Camera,
+    FileTransfer
   ],
   bootstrap: [AppComponent]
 })

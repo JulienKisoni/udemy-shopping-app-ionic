@@ -16,6 +16,7 @@ import { itemCart } from 'src/models/itemCart-interface';
 })
 export class ProductDetailPage implements OnInit {
 article : Article;
+rate: any;
 slidesOpt = {
   speed: 1000,
   autoplay: {
@@ -35,6 +36,10 @@ slidesOpt = {
       })
   }
 
+  onModelChange($event) {
+    console.log('event', $event);
+  }
+
   loadData(id: string) : Observable<Article> {
     let url: string = `${environement.api_url}/Articles/${id}`;
     return this.http.get<Article>(url);
@@ -43,6 +48,20 @@ slidesOpt = {
   showImage(imgId: string, imgTitle: string) {
     this.photoViewer.show(`http://192.168.8.101:3000/api/Containers/photos/download/${imgId}`, 
     imgTitle, {share: true});
+  }
+
+  leaveNote() : void {
+    console.log('rate', this.rate);
+    let average: number = (this.article.averageStar + this.rate)/2;
+    let aroundi : number = Math.ceil(average);
+    let utilisateurId: string = this.article.utilisateurId;
+    let articleId: string = this.article.id;
+    let url: string = `${environement.api_url}/Utilisateurs/${utilisateurId}/Articles/${articleId}`;
+    console.log('url', url);
+    this.http.put(url, {"averageStar": aroundi})
+      .subscribe(res => {
+        this.presentToast('Votre note a réussi !', 2000);
+      })
   }
 
   openCart() {

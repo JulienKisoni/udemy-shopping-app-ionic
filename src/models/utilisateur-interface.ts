@@ -3,4 +3,5 @@ export interface Utilisateur {
     contact : string;
     avatar ?: string;
     type : string;
+    id ?: string;
 }

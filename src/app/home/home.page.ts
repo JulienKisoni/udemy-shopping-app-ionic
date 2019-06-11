@@ -31,6 +31,9 @@ export class HomePage {
     return this.http.get<Article[]>(url);
       
   }
+  goToCreate() {
+    this.navCtrl.navigateForward('/create-product');
+  }
 
   doRefresh($event) {
     this.loadData()

@@ -61,6 +61,16 @@
         </div>
       </ion-card-title>
       <p style="text-align: justify">{{ article?.description }}</p>
+      <h3 class="title">Laissez une note</h3>
+      <div class="rating-container">
+        <rating 
+        [(ngModel)]="rate"
+        readonly="false"
+        size="default"
+        (ngModelChange)="onModelChange($event)">
+        </rating>
+        <ion-button (click)="leaveNote()" size="small">Noter</ion-button>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

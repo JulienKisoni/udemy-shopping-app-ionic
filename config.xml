@@ -3,7 +3,7 @@
     <name>MyApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.8.101:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -98,5 +98,9 @@
     <plugin name="cordova-plugin-facebook4" spec="4.2.1" />
     <plugin name="com-sarriaroman-photoviewer" spec="1.2.2" />
     <allow-navigation href="http://192.168.8.102:8100" sessionid="d6887597" />
+    <plugin name="cordova-plugin-camera" spec="4.0.3" />
+    <plugin name="cordova-plugin-telerik-imagepicker" spec="2.3.2" />
+    <plugin name="cordova-plugin-file-transfer" spec="1.7.1" />
+    <allow-navigation href="http://192.168.8.101:8100" sessionid="088d15a8" />
     <engine name="android" spec="7.1.4" />
 </widget>

@@ -32,12 +32,12 @@ utilisateur = {} as Utilisateur;
               avatar: "",
               username: ""
             }
-            await this.storage.setItem('Utilisateur', this.utilisateur);
             await this.storage.setItem('isLoggedIn', true);
             // stocker utilisateur dans MongoDB
-              let url : string = `${environement.api_url}/Utilisateurs`;
-              this.http.post(url, this.utilisateur)
-                .subscribe(user => {
+            let url : string = `${environement.api_url}/Utilisateurs`;
+            this.http.post(url, this.utilisateur)
+            .subscribe(async user => {
+              await this.storage.setItem('Utilisateur', user);
                   // naviguer vers la page d'acceuil
                   this.navCtrl.navigateRoot('/home');
                 })
@@ -64,13 +64,13 @@ utilisateur = {} as Utilisateur;
                 avatar: "",
                 username: ""
               }
-              await this.storage.setItem('Utilisateur', this.utilisateur);
               await this.storage.setItem('isLoggedIn', true);
               // stocker utilisateur dans MongoDB
-                let url : string = `${environement.api_url}/Utilisateurs`;
-                this.http.post(url, this.utilisateur)
-                  .subscribe(user => {
-                    // naviguer vers la page d'acceuil
+              let url : string = `${environement.api_url}/Utilisateurs`;
+              this.http.post(url, this.utilisateur)
+              .subscribe(async user => {
+                await this.storage.setItem('Utilisateur', user);
+                // naviguer vers la page d'acceuil
                     console.log('user', user);
                     this.navCtrl.navigateRoot('/home');
                   })
