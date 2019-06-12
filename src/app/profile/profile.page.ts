@@ -1,9 +1,12 @@
-import { NavController, ActionSheetController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { NavController, ActionSheetController, ToastController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
 import { Utilisateur } from './../../models/utilisateur-interface';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Component, OnInit } from '@angular/core';
+import { FileTransferObject, FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { environement } from 'src/models/environements';
 
 @Component({
   selector: 'app-profile',
@@ -13,8 +16,10 @@ import { Component, OnInit } from '@angular/core';
 export class ProfilePage implements OnInit {
 profileType: string = "Profil";
 utilisateur = {} as Utilisateur;
+imgUploaded: boolean = false;
   constructor(private storage: NativeStorage, private imagePicker: ImagePicker, private camera: Camera,
-    private navCtrl: NavController, private actionSheet: ActionSheetController) { }
+    private navCtrl: NavController, private actionSheet: ActionSheetController,
+    private transfer: FileTransfer, private http: HttpClient, private toastCtrl: ToastController) { }
 
   async ngOnInit() {
     this.utilisateur = await this.storage.getItem('Utilisateur');
@@ -23,13 +28,59 @@ utilisateur = {} as Utilisateur;
     }
   }
 
+  async presentToast(message: string, duration: number) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
+  }
+
   segmentChanged($event) {
     console.log('event', $event);
     this.profileType = $event.detail.value;
   }
 
-  updateProfile() {
+  async uploadImages(image: string) {
+        let elementName: string = image.substr(image.lastIndexOf('/')+1);
+        console.log('elementName', elementName);
+        let fileTransfer: FileTransferObject = this.transfer.create();
+        const url: string = `${environement.api_url}/Containers/photos/upload`;
+        console.log('url',url);
+        let options: FileUploadOptions = {
+          fileKey: 'Shopping',
+          fileName: elementName,
+          chunkedMode: false,
+          mimeType: 'image/jpeg',
+          headers: {}
+        }
+        if (!this.imgUploaded) {
+          let data = await fileTransfer.upload(image, url, options);
+          let id: string = JSON.parse(data.response)._id;
+          console.log('id', id);
+          // this.utilisateur.avatar = id;
+          this.imgUploaded = true;
+          return id;
+        }
+  }
+
+
+  async updateProfile() {
     console.log('utilisateur', this.utilisateur);
+    let flag : string = await this.uploadImages(this.utilisateur.avatar);
+    if (flag) {
+      this.utilisateur.avatar = flag;
+      const url: string = `${environement.api_url}/Utilisateurs/${this.utilisateur.id}`;
+      this.http.put(url, this.utilisateur)
+        .subscribe(result => {
+          // Afficher un message toast
+          console.log('result', result);
+          this.presentToast('Mise à jour réussie !', 2000);
+        }, error => {
+          console.log('echec', error);
+          this.presentToast('Echec de la mise à jour !', 2000);
+        })
+    }
   }
 
   async galerie(imageNum: number) {
