@@ -1,9 +1,46 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+    <ion-toolbar color="primary">
+      <ion-segment [(ngModel)]="profileType" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="Profil" layout="icon-start">
+          <ion-icon name="contact"></ion-icon>
+          <ion-label>Profil</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="Mes Articles" layout="icon-start">
+          <ion-icon name="pricetags"></ion-icon>
+          <ion-label>Mes Articles</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <div [ngSwitch]="profileType">
+      <div *ngSwitchCase="'Profil'">
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-img [src]="utilisateur?.avatar"></ion-img>
+          </ion-avatar>
+          <div class="my-container-label">
+            <ion-label class="my-label-title">{{utilisateur?.username}}</ion-label>
+            <ion-label color="medium">{{utilisateur?.contact}}</ion-label>
+          </div>
+          <ion-buttons slot="end">
+            <ion-button (click)="action()" color="secondary">
+              <ion-icon slot="icon-only" name="camera"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Nom d'utilisateur</ion-label>
+          <ion-input type="text" [(ngModel)]="utilisateur.username"></ion-input>
+        </ion-item>
+        <ion-button (click)="updateProfile()" expand="block">
+          Mettre à jour
+        </ion-button>
+      </div>
+      <div *ngSwitchCase="'Mes Articles'">
+        <p>Partie Mes Articles</p>
+      </div>
+    </div>
+  </ion-content>
+  
