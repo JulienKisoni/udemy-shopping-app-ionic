@@ -14,6 +14,14 @@
   </ion-header>
   
   <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Chargement...">
+        </ion-refresher-content>
+      </ion-refresher>
     <div [ngSwitch]="profileType">
       <div *ngSwitchCase="'Profil'">
         <ion-item>
@@ -39,7 +47,46 @@
         </ion-button>
       </div>
       <div *ngSwitchCase="'Mes Articles'">
-        <p>Partie Mes Articles</p>
+        <ion-list>
+            <ion-item-sliding *ngFor="let article of articles; let i = index">
+                <ion-item>
+                  <ion-thumbnail slot="start">
+                    <ion-img [src]="'http://192.168.8.101:3000/api/Containers/photos/download/'+article.pictures[0]"></ion-img>
+                  </ion-thumbnail>
+                  <ion-label>
+                    <h2>{{ article.title }}</h2>
+                    <p>{{ article.description }}</p>
+                    <p>{{ article.price | currency }}
+                      <span *ngIf="article.averageStar >= 1">
+                          <ion-icon class="iconStar" name="star"></ion-icon>
+                        </span>
+                        <span *ngIf="article.averageStar >= 2">
+                          <ion-icon class="iconStar" name="star"></ion-icon>
+                        </span>
+                        <span *ngIf="article.averageStar >= 3">
+                          <ion-icon class="iconStar" name="star"></ion-icon>
+                        </span>
+                        <span *ngIf="article.averageStar >= 4">
+                          <ion-icon class="iconStar" name="star"></ion-icon>
+                        </span>
+                        <span *ngIf="article.averageStar >= 5">
+                          <ion-icon class="iconStar" name="star"></ion-icon>
+                      </span>
+                    </p>
+                  </ion-label>
+                </ion-item>
+                <ion-item-options side="start">
+                  <ion-item-option (click)="updateArticle(article, i)" color="tertiary" expandable>
+                    <ion-icon name="create" slot="icon-only"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+                <ion-item-options side="end">
+                  <ion-item-option (click)="deleteArticle(article, i)" color="danger" expandable>
+                    <ion-icon name="trash" slot="icon-only"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+        </ion-list>
       </div>
     </div>
   </ion-content>

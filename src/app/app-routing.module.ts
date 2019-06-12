@@ -9,7 +9,9 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'messagerie', loadChildren: './messagerie/messagerie.module#MessageriePageModule' },
   { path: 'cart', loadChildren: './cart/cart.module#CartPageModule' },
-  { path: 'product-detail/:id', loadChildren: './product-detail/product-detail.module#ProductDetailPageModule' },  { path: 'create-product', loadChildren: './create-product/create-product.module#CreateProductPageModule' },
+  { path: 'product-detail/:id', loadChildren: './product-detail/product-detail.module#ProductDetailPageModule' },
+  { path: 'create-product', loadChildren: './create-product/create-product.module#CreateProductPageModule' },
+  { path: 'edit-product/:id', loadChildren: './edit-product/edit-product.module#EditProductPageModule' },
 
 
 
