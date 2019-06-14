@@ -11,7 +11,7 @@
   <ion-list>
     <ion-item *ngFor="let item of cartItems; let i = index">
       <ion-thumbnail slot="start">
-        <ion-img [src]="'http://192.168.8.101:3000/api/Containers/photos/download/'+item.item.pictures[0]"></ion-img>
+        <ion-img [src]="'http://192.168.43.73:3000/api/Containers/photos/download/'+item.item.pictures[0]"></ion-img>
       </ion-thumbnail>
       <div class="my-container-label">
         <ion-label>{{ item.item.title }}</ion-label>
@@ -22,7 +22,7 @@
           Livraison : {{ item.item.availability.feed | currency }}
         </ion-label>
         <ion-label color="medium">Total : {{ ((item.qty*item.amount)+item.item.availability.feed | currency)}}</ion-label>
-        <ion-button class="btn-cart" size="small">
+        <ion-button (click)="contact(item)" class="btn-cart" size="small">
           <ion-icon slot="start" name="mail"></ion-icon>
           Contacter vendeur
         </ion-button>

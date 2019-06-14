@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>{{ article?.title }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="share()">
         <ion-icon slot="icon-only" name="share"></ion-icon>
       </ion-button>
       <ion-button (click)="openCart()">
@@ -19,7 +19,7 @@
   <ion-card>
     <ion-slides pager="true" [options]="slidesOpt">
       <ion-slide (click)="showImage(image, article.title)" *ngFor="let image of article?.pictures">
-        <ion-img [src]="'http://192.168.8.101:3000/api/Containers/photos/download/'+image"></ion-img>
+        <ion-img [src]="'http://192.168.43.73:3000/api/Containers/photos/download/'+image"></ion-img>
       </ion-slide>
     </ion-slides>
     <ion-card-content>

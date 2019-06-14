@@ -35,7 +35,7 @@ utilisateur: Utilisateur;
     this.article.pictures = [];
     this.article.averageStar = 1;
     this.article.createdAt = new Date().getTime();
-    this.article.owner = "Juju";
+    
     this.categories = categories;
     this.cities = cities;
   }
@@ -44,6 +44,7 @@ utilisateur: Utilisateur;
     this.utilisateur = await this.storage.getItem("Utilisateur");
     this.utilisateur.id = "5cee65b23f3473079cea5e11";
     this.storage.setItem("Utilisateur", this.utilisateur);
+    this.article.owner = this.utilisateur.username;
   }
 
   async uploadImages(images: string[]) {

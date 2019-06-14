@@ -21,8 +21,11 @@ export class HomePage {
   ngOnInit() {
     this.loadData()
     .subscribe((data: Article[]) => {
-      console.log('articles', data);
       this.articles = data;
+      for (let i = 0; i < 5; i++) {
+        this.articles.push(...data);
+      }
+      console.log('articles', this.articles);
     })
   }
 

@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Component, OnInit } from '@angular/core';
 import { itemCart } from 'src/models/itemCart-interface';
@@ -10,7 +11,7 @@ import { itemCart } from 'src/models/itemCart-interface';
 export class CartPage implements OnInit {
 cartItems: itemCart[];
 total: number = 0;
-  constructor(private storage: NativeStorage) { }
+  constructor(private storage: NativeStorage, private navCtrl: NavController) { }
 
   async ngOnInit() {
     this.cartItems = await this.storage.getItem("Cart");
@@ -27,5 +28,8 @@ total: number = 0;
     this.cartItems.splice(index, 1);
     await this.storage.setItem("Cart", this.cartItems);
     this.total -= myTotal;
+  }
+  contact(item: itemCart) {
+    this.navCtrl.navigateForward(`/action-message/${'1000'}/write/${item.item.utilisateurId}`);
   }
 }

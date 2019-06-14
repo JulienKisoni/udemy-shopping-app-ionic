@@ -12,6 +12,8 @@ const routes: Routes = [
   { path: 'product-detail/:id', loadChildren: './product-detail/product-detail.module#ProductDetailPageModule' },
   { path: 'create-product', loadChildren: './create-product/create-product.module#CreateProductPageModule' },
   { path: 'edit-product/:id', loadChildren: './edit-product/edit-product.module#EditProductPageModule' },
+  { path: 'action-message/:id/:action/:uid', loadChildren: './action-message/action-message.module#ActionMessagePageModule' },
+
 
 
 

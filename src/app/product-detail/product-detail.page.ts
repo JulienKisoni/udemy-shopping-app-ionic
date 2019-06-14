@@ -1,3 +1,4 @@
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ToastController, NavController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
@@ -25,7 +26,8 @@ slidesOpt = {
 }
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient,
       private photoViewer : PhotoViewer, private storage: NativeStorage,
-      private toastCtrl: ToastController, private navCtlr: NavController) { }
+      private toastCtrl: ToastController, private navCtlr: NavController,
+      private sharing: SocialSharing) { }
 
   ngOnInit() {
     const id: string = this.activatedRoute.snapshot.paramMap.get('id');
@@ -34,6 +36,19 @@ slidesOpt = {
       .subscribe(data => {
         this.article = data;
       })
+  }
+  async share() {
+    try {
+      await this.sharing.share(
+        this.article.title,
+        null,
+        null,
+        `https://example.com/product-detail/${this.article.id}`
+      );
+      console.log('partage réussi !');
+    } catch(e) {
+      console.log("error", e);
+    }
   }
 
   onModelChange($event) {
