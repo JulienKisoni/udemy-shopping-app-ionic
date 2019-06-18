@@ -7,6 +7,7 @@ import { Availability } from './../../models/article-interface';
 import { Article } from 'src/models/article-interface';
 import { Component, OnInit } from '@angular/core';
 import { cities } from 'src/models/cities';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { ActionSheetController, LoadingController, ToastController, NavController } from '@ionic/angular';
 
 import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
@@ -29,7 +30,8 @@ utilisateur: Utilisateur;
   constructor(private actionSheet: ActionSheetController, private imagePicker: ImagePicker,
       private camera: Camera, private transfer: FileTransfer, private http: HttpClient,
       private storage: NativeStorage, private loadingCtrl: LoadingController, 
-      private toastCtrl: ToastController, private navCtrl: NavController) { 
+      private toastCtrl: ToastController, private navCtrl: NavController,
+      private webview: WebView) { 
     this.article = {} as Article;
     this.article.availability = {} as Availability;
     this.article.pictures = [];
@@ -149,7 +151,9 @@ utilisateur: Utilisateur;
               for (let i = 0; i < pictures.length; i++) {
                 const element = pictures[i];
                 console.log('element de pictures', element);
-                this.myPictures.push(element);
+                let src = this.webview.convertFileSrc(element);
+              console.log('src', src);
+                this.myPictures.push(src);
               }
           }
         },
@@ -160,7 +164,9 @@ utilisateur: Utilisateur;
             console.log('Camera');
             this.getCam().then(image => {
               console.log('image', image);
-              this.myPictures.push(image);
+              let src = this.webview.convertFileSrc(image);
+              console.log('src', src);
+              this.myPictures.push(src);
             })
           }
         },

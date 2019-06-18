@@ -341,6 +341,13 @@
   dependencies:
     "@types/cordova" latest
 
+"@ionic-native/ionic-webview@^5.8.0":
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/ionic-webview/-/ionic-webview-5.8.0.tgz#eba3afa08c463209bc4e5df4e3110dd6e68e93ae"
+  integrity sha512-oUKrcv/9BTAB0v4vC7zY/k6hEcDeo4RmnFbSOo/lfqKVW0Stotj040syLyI6BA0uPXGMokBTLPslTOfEiRbMuQ==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic-native/native-storage@^5.6.1":
   version "5.6.1"
   resolved "https://registry.yarnpkg.com/@ionic-native/native-storage/-/native-storage-5.6.1.tgz#3dfc2d5fd118c1004bd92c426bee1eb88d7eefb8"

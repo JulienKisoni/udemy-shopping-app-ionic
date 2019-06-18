@@ -1,3 +1,4 @@
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -36,7 +37,8 @@ import { AppRoutingModule } from './app-routing.module';
     Camera,
     FileTransfer,
     SocialSharing,
-    Deeplinks
+    Deeplinks,
+    WebView
   ],
   bootstrap: [AppComponent]
 })
