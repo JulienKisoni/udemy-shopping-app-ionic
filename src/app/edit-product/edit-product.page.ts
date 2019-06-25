@@ -26,14 +26,18 @@ cities : any[];
 
   ngOnInit() {
     this.article.availability = {} as Availability;
+    // on récupère le paramètre 'id' qui est l'id de l'article à modifier
     const id: string = this.activatedRoute.snapshot.paramMap.get('id');
     console.log('id');
+    // on lance la requette pour récuperer l'article correspondant à cette 'id'
     this.loadData(id)
       .subscribe(data => {
+        // on stocke cette article dans la propriété 'article'
         this.article = data;
       })
   }
 
+  //  on affiche un message toast grace à cette methode
   async presentToast(message: string, duration: number) {
     const toast = await this.toastCtrl.create({
       message: message,
@@ -42,11 +46,13 @@ cities : any[];
     toast.present();
   }
 
+  // Voici la methode pour charger l'article
   loadData(id: string) : Observable<Article> {
     let url: string = `${environement.api_url}/Articles/${id}`;
     return this.http.get<Article>(url);
   }
   
+  // Voici la methode pour mettre à jour (modifier) un article
   update() {
     console.log('article', this.article);
     const id: string = this.article.utilisateurId;

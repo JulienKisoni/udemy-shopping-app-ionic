@@ -24,6 +24,7 @@ export class MessageriePage implements OnInit {
 
   async ngOnInit() {
     this.utilisateur = await this.storage.getItem('Utilisateur');
+    // on appèlle la methode pour charger tous les messages et notification au meme moment
     this.loadAll()
       .subscribe(results => {
         console.log('results', results);
@@ -33,12 +34,14 @@ export class MessageriePage implements OnInit {
       })
   }
 
+  // Voici la methode pour changer de segment
   segmentChanged($event) {
     this.messageType = $event.detail.value;
   }
-
+// Voici la methode pour charger tous les messages et notifications
   loadAll(event?) {
     if (event) {
+      // si un evenement est passé en paramètre, on fait le 'pull refresh'
       forkJoin(this.loadReceived(), this.loadSent(), this.loadNotif())
       .subscribe(results => {
         console.log('results', results);
@@ -67,10 +70,11 @@ export class MessageriePage implements OnInit {
     console.log('url', url);
     return this.http.get<Notification[]>(url);
   }
-
+//  grace à cette methode, on se déplace sur la page 'action-message' pour écrire un message
   messageWrite(message: Message, i) {
     this.navCtrl.navigateForward(`/action-message/${message.id}/write/${'1000'}`);
   }
+  //  grace à cette methode, on se déplace sur la page 'action-message' pour lire un message
   messageView(message: Message, i) {
     this.navCtrl.navigateForward(`/action-message/${message.id}/read/${'1000'}`);
   }

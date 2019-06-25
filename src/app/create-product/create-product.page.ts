@@ -1,3 +1,4 @@
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { Utilisateur } from './../../models/utilisateur-interface';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { HttpClient } from '@angular/common/http';
@@ -43,20 +44,25 @@ utilisateur: Utilisateur;
   }
 
   async ngOnInit() {
+    //  on recupère le contenu de la clé 'Utilisateur' de notre local storage 
+    // et on stocke ça dans la propriété utilisateur
     this.utilisateur = await this.storage.getItem("Utilisateur");
-    this.utilisateur.id = "5cee65b23f3473079cea5e11";
-    this.storage.setItem("Utilisateur", this.utilisateur);
     this.article.owner = this.utilisateur.username;
   }
 
+  // Grace à cette methode, on va pouvoir uploader des images
   async uploadImages(images: string[]) {
+    // on parcours le tableua d'images qui est passé en parametre
     for (let i = 0; i < images.length; i++) {
       const element: string = images[i];
+      // on stocke le nom de l'image dans la variable 'elementName'
         let elementName: string = element.substr(element.lastIndexOf('/')+1);
         console.log('elementName', elementName);
+        // on initialise l'objet 'fileTransfer'
         let fileTransfer: FileTransferObject = this.transfer.create();
         const url: string = `${environement.api_url}/Containers/photos/upload`;
         console.log('url',url);
+        // on détermine les options d'upload de fichiers
         let options: FileUploadOptions = {
           fileKey: 'Shopping',
           fileName: elementName,
@@ -65,19 +71,25 @@ utilisateur: Utilisateur;
           headers: {}
         }
         if (!this.imgUploaded) {
+          // on upload l'image et on stocke le résultat dans 'data'.
           let data = await fileTransfer.upload(element, url, options);
+          // on récupère l'id de l'image qui vient d'etre uploadé
           let id: string = JSON.parse(data.response)._id;
           console.log('id', id);
           this.article.pictures.push(id);
+          // on incrémente le numbre d'images uploadées de 1
           this.numImgUpload += 1;
         }
         if (this.numImgUpload === images.length) {
+          // si le nombre d'images uploadées = à la longeur du tablear alors :
           this.imgUploaded = true;
         }
       }
       return true;
   }
 
+  // Grace à cette methode, on va créer un nouveau document 'Article'.
+  // On va créer un nouvel article
   async create() {
     this.article.availability.available = true;
     console.log('article', this.article);
@@ -119,6 +131,7 @@ utilisateur: Utilisateur;
     }
   }
 
+  // Grace à cette methode on selectionne les images à partir de la galerie
   async galerie(imageNum: number) {
     let options: ImagePickerOptions = {
       maximumImagesCount: imageNum,
@@ -127,6 +140,7 @@ utilisateur: Utilisateur;
     }
     return this.imagePicker.getPictures(options);
   }
+  // Grace à cette methode on peut prendre en photo
   async getCam() {
     let options: CameraOptions = {
       sourceType: 1,
@@ -138,6 +152,10 @@ utilisateur: Utilisateur;
     return this.camera.getPicture(options);
   }
 
+  //  Grace à cette methode on peut afficher un action sheet avec 3 boutons pour soit:
+  /* 1. Selectionner à partir de la Galerie
+  2. Prendre en Photo
+  3. Annuler */
   async action() {
     const actionSheet = await this.actionSheet.create({
       header: 'Sélectionner la source',
@@ -152,7 +170,6 @@ utilisateur: Utilisateur;
                 const element = pictures[i];
                 console.log('element de pictures', element);
                 let src = this.webview.convertFileSrc(element);
-              console.log('src', src);
                 this.myPictures.push(src);
               }
           }
@@ -165,7 +182,6 @@ utilisateur: Utilisateur;
             this.getCam().then(image => {
               console.log('image', image);
               let src = this.webview.convertFileSrc(image);
-              console.log('src', src);
               this.myPictures.push(src);
             })
           }
@@ -183,6 +199,8 @@ utilisateur: Utilisateur;
   delete(index: number) {
     this.myPictures.splice(index, 1);
   }
+  
+  //  on affiche un message toast grace à cette methode
   async presentToast(message: string, duration: number) {
     const toast = await this.toastCtrl.create({
       message: message,

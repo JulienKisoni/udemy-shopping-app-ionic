@@ -30,13 +30,17 @@ slidesOpt = {
       private sharing: SocialSharing) { }
 
   ngOnInit() {
+    // on récupère le paramètre 'id' qui est l'id de l'article à afficher
     const id: string = this.activatedRoute.snapshot.paramMap.get('id');
     console.log('id', id);
+    // on lance la requette pour récuperer l'article correspondant à cette 'id'
     this.loadData(id)
       .subscribe(data => {
+        // on stocke cette article dans la propriété 'article'
         this.article = data;
       })
   }
+  //  Methode pour partager un article via les reseaux sociaux
   async share() {
     try {
       await this.sharing.share(
@@ -55,19 +59,24 @@ slidesOpt = {
     console.log('event', $event);
   }
 
+  // Voici la methode pour charger l'article
   loadData(id: string) : Observable<Article> {
     let url: string = `${environement.api_url}/Articles/${id}`;
     return this.http.get<Article>(url);
       
   }
+   // methode pour visionner une image avec option de partage
   showImage(imgId: string, imgTitle: string) {
     this.photoViewer.show(`http://192.168.8.101:3000/api/Containers/photos/download/${imgId}`, 
     imgTitle, {share: true});
   }
 
+  // Voici la methode pour laisser une note à un article
   leaveNote() : void {
     console.log('rate', this.rate);
+    // on stocke la moyenne dans 'average'
     let average: number = (this.article.averageStar + this.rate)/2;
+    // on arrondi 'average' et on stocke le résultat dans 'aroundi'
     let aroundi : number = Math.ceil(average);
     let utilisateurId: string = this.article.utilisateurId;
     let articleId: string = this.article.id;
@@ -78,11 +87,12 @@ slidesOpt = {
         this.presentToast('Votre note a réussi !', 2000);
       })
   }
-
+//  grace à cette methode, on se déplace sur la page 'cart' 
   openCart() {
     this.navCtlr.navigateForward('/cart');
   }
 
+  // methode pour ajouter un article au panier
   async addToCart(item: Article) {
     try {
       let data: itemCart[];
@@ -134,7 +144,7 @@ slidesOpt = {
       }
     }
   }
-
+//  on affiche un message toast grace à cette methode
   async presentToast(message: string, duration: number) {
     const toast = await this.toastCtrl.create({
       message: message,

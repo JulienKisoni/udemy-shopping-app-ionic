@@ -26,9 +26,12 @@ articles : Article[];
     private loadingCtrl: LoadingController) { }
 
   async ngOnInit() {
+    //  on recupère le contenu de la clé 'Utilisateur' de notre local storage 
+    // et on stocke ça dans la propriété utilisateur
     this.utilisateur = await this.storage.getItem('Utilisateur');
     console.log('utilisateur storage', this.utilisateur);
     if (this.utilisateur.avatar === "") {
+      // si notre utilisateur n'a pas d'avatar pour le moment, son avatar sera :
       this.utilisateur.avatar = 'https://ionicframework.com/docs/demos/api/avatar/avatar.svg';
     }
     this.loadData()
@@ -74,6 +77,7 @@ articles : Article[];
       })
   }
 
+  //  on affiche un message toast grace à cette methode
   async presentToast(message: string, duration: number) {
     const toast = await this.toastCtrl.create({
       message: message,
@@ -82,11 +86,13 @@ articles : Article[];
     toast.present();
   }
 
+  // Voici la methode pour changer de segment
   segmentChanged($event) {
     console.log('event', $event);
     this.profileType = $event.detail.value;
   }
 
+   //  Voici la methode pour charger les articles appartenant à notre utilisateur
   loadData() : Observable<Article[]> {
     const id: string = this.utilisateur.id;
     let url: string = `${environement.api_url}/Utilisateurs/${id}/articles`;
@@ -94,6 +100,7 @@ articles : Article[];
       
   }
 
+  //  Voici la methode pour utiliser le pull refresh
   doRefresh($event) {
     this.loadData()
     .subscribe((data: Article[]) => {
@@ -102,13 +109,16 @@ articles : Article[];
         $event.target.complete();
     })
   }
-
+// Grace à cette methode, on va pouvoir uploader l'avatar de l'utilisateur
   async uploadImages(image: string) {
+    // on stocke le nom de l'image dans la variable 'elementName'
         let elementName: string = image.substr(image.lastIndexOf('/')+1);
         console.log('elementName', elementName);
+        // on initialise l'objet 'fileTransfer'
         let fileTransfer: FileTransferObject = this.transfer.create();
         const url: string = `${environement.api_url}/Containers/photos/upload`;
         console.log('url',url);
+        // on détermine les options d'upload de fichiers
         let options: FileUploadOptions = {
           fileKey: 'Shopping',
           fileName: elementName,
@@ -126,7 +136,7 @@ articles : Article[];
         }
   }
 
-
+// Grace à cette methode, on va mette à jour le profil de l'utilisateur
   async updateProfile() {
     console.log('utilisateur', this.utilisateur);
     let flag : string = await this.uploadImages(this.utilisateur.avatar);
@@ -146,6 +156,7 @@ articles : Article[];
     }
   }
 
+   // Grace à cette methode on selectionne les images à partir de la galerie
   async galerie(imageNum: number) {
     let options: ImagePickerOptions = {
       maximumImagesCount: imageNum,
@@ -154,6 +165,7 @@ articles : Article[];
     }
     return this.imagePicker.getPictures(options);
   }
+  // Grace à cette methode on peut prendre en photo
   async getCam() {
     let options: CameraOptions = {
       sourceType: 1,
@@ -165,6 +177,10 @@ articles : Article[];
     return this.camera.getPicture(options);
   }
 
+   //  Grace à cette methode on peut afficher un action sheet avec 3 boutons pour soit:
+  /* 1. Selectionner à partir de la Galerie
+  2. Prendre en Photo
+  3. Annuler */
   async action() {
     const actionSheet = await this.actionSheet.create({
       header: 'Sélectionner la source',

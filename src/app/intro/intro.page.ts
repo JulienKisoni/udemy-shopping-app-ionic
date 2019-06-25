@@ -19,6 +19,7 @@ utilisateur = {} as Utilisateur;
   ngOnInit() {
   }
 
+  //  Grace a cette methode on va pouvoir se connecter en passant par facebook
   loginWithFacebook() : void {
     this.fb.login(['public_profile', 'user_friends', 'email'])
       .then((res: FacebookLoginResponse) => {
@@ -26,6 +27,7 @@ utilisateur = {} as Utilisateur;
         this.fb.api('me?fields=email', [])
           .then(async profil => {
             let email: string = profil['email'];
+            // on crée l'objet 'utilisateur'
             this.utilisateur = {
               contact : email,
               type: 'email',
@@ -46,6 +48,7 @@ utilisateur = {} as Utilisateur;
       .catch(e => console.log('Error logging into Facebook', e));
       }
   
+      //  Grace a cette methode on va pouvoir se connecter en passant par notre numéro de téléphone
   loginWithPhone() {
     console.log('btn clicked');
     (<any>window).AccountKitPlugin.loginWithPhoneNumber(
@@ -58,6 +61,7 @@ utilisateur = {} as Utilisateur;
           (<any>window).AccountKitPlugin.getAccount(
             async account => {
               console.log('account', account);
+              // on crée l'objet 'utilisateur'
               this.utilisateur = {
                 contact : account.phoneNumber,
                 type: 'phone',

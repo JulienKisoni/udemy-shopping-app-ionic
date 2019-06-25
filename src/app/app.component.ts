@@ -29,8 +29,12 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(async () => {
+       //  on recupère le contenu de la clé 'isLoggedIn' de notre local storage 
+    // et on stocke ça dans la propriété loggedIn
       const loggedIn = await this.storage.getItem('isLoggedIn');
+      // on change la couleur de notre 'statusBar'
       this.statusBar.backgroundColorByHexString('#0bb8cc');
+      // on réagit à l'url de notre application
       this.deeplinks.routeWithNavController(this.navCtrl, {
         'product-detail/:id': ProductDetailPage
       }).subscribe(match => {
@@ -44,6 +48,7 @@ export class AppComponent {
           console.error('Got a deeplink that didn\'t match', nomatch);
         });
       if (loggedIn) {
+        // si l'utilisateur s'est déjà connecté, on le déplace directement sur la page 'home'
         console.log('Déjà connecté');
         this.navCtrl.navigateRoot('/home');
       }
