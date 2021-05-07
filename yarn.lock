@@ -2132,10 +2132,10 @@ cordova-plugin-ionic-keyboard@^2.0.5:
   resolved "https://registry.yarnpkg.com/cordova-plugin-ionic-keyboard/-/cordova-plugin-ionic-keyboard-2.1.3.tgz#6b050d5b7cb4393d5758b55f45a46372f25178fe"
   integrity sha512-6ucQ6FdlLdBm8kJfFnzozmBTjru/0xekHP/dAhjoCZggkGRlgs8TsUJFkxa/bV+qi7Dlo50JjmpE4UMWAO+aOQ==
 
-cordova-plugin-ionic-webview@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-ionic-webview/-/cordova-plugin-ionic-webview-1.2.1.tgz#6d2162a2b1c593de436359d0746afc28b6a28d57"
-  integrity sha512-35Tu80g74enHV7HnXPDTwaPfObFydsLWyyAo2Eez/ns80UfhwkV99hWeG5jSO3zpPtSY8AVq7la6Z6Ww+4kDkg==
+cordova-plugin-ionic-webview@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-ionic-webview/-/cordova-plugin-ionic-webview-4.1.0.tgz#102404239ae019112fe600799bc8ca0c9a15b26a"
+  integrity sha512-aY1yI042TMgyDoh07rUSxSedlTwQfrvS44UnpakmCqmA/BapjSv88ixa5qUun95vwsYdTERX2VJp6h/YrR1lFQ==
 
 cordova-plugin-nativestorage@2.3.2:
   version "2.3.2"
@@ -6088,9 +6088,9 @@ querystring@0.2.0:
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
 querystringify@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
-  integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
+  integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.1.0"
@@ -7763,9 +7763,9 @@ urix@^0.1.0:
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
 
 url-parse@^1.4.3:
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.7.tgz#a8a83535e8c00a316e403a5db4ac1b9b853ae278"
-  integrity sha512-d3uaVyzDB9tQoSXFvuSUNFibTd9zxd2bkVrDRvF5TmvWWQwqE4lgYJ5m+x1DbecWkw+LK4RNl2CU1hHuOKPVlg==
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.1.tgz#d5fa9890af8a5e1f274a2c98376510f6425f6e3b"
+  integrity sha512-HOfCOUJt7iSYzEx/UqgtwKRMC6EU91NFhsCHMv9oM03VJcVo2Qrp8T8kI9D7amFf1cu+/3CEhgb3rF9zL7k85Q==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
